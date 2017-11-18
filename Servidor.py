@@ -7,8 +7,16 @@ def ordenarVetor(vetorBytes):
     """Função que ordena o vetor."""
     vetor = list(map(int, vetorBytes))
 
+    vetor = quicksort(vetor)
 
     return bytes(vetor)
+
+def quicksort(arr):
+    if len(arr) <= 1: return arr
+    m = arr[0]
+    return quicksort([i for i in arr if i < m]) + \
+        [i for i in arr if i == m] + \
+        quicksort([i for i in arr if i > m])
 
 
 ip = 'localhost'  # Definição do endereço IP
