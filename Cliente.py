@@ -1,6 +1,7 @@
 """Implementação do cliente utilizando sockets."""
 import socket
 import random
+from time import sleep
 
 
 def criarVetor(tamanho):
@@ -12,7 +13,7 @@ def criarVetor(tamanho):
             pass
         else:
             vetor.append(num)
-    print(vetor)
+    print('Cliente: O vetor desordenado é: {}'.format(vetor))
     return bytes(vetor)
 
 
@@ -21,18 +22,24 @@ porta = 8000  # Definição da porta de conexão
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Definição do tipo de conexão (TCP ou UDP)
 tcp.connect((ip, porta))  # Solicita uma conexão
-print('Solicitando um a conexão...')
+print('Solicitando uma conexão...')
+
+sleep(3)
 
 vetor = criarVetor(10)  # Chama a função para criar o vetor e o transformar em um array de bytes
-print(vetor)
 tcp.send(vetor)  # Envia o vetor em formato de bytes
+sleep(3)
 print('Cliente: Vetor enviado')
 
+
 print('Cliente: Esperando o novo vetor...')
+sleep(3)
 vetor = tcp.recv(1024)  # Recebe o novo vetor
-print('Cliente: O vetor foi recebido')
+print('Cliente: O novo vetor foi recebido')
 vetor = list(map(int, vetor))
 
-print('O vetor ordenado é: {}'.format(vetor))  # Mostra o novo vetor
+sleep(3)
+
+print('Cliente: O novo vetor é: {}'.format(vetor))  # Mostra o novo vetor
 
 tcp.close()  # Fecha a conexão
