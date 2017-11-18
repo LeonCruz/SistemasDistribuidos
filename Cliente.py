@@ -12,19 +12,18 @@ def criarVetor(tamanho):
             pass
         else:
             vetor.append(num)
-
     print(vetor)
-    return str(vetor)
+    return bytes(vetor)
 
 
 ip = 'localhost'  # Definição do endereço IP
-porta = 5000  # Definição da porta de conexão
+porta = 8000  # Definição da porta de conexão
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Definição do tipo de conexão (TCP ou UDP)
 tcp.connect((ip, porta))  # Solicita uma conexão
 print('Solicitando um a conexão...')
 
-vetor = bytearray(criarVetor(10), 'utf-8')  # Chama a função para criar o vetor e o transformar em um array de bytes
+vetor = criarVetor(10)  # Chama a função para criar o vetor e o transformar em um array de bytes
 print(vetor)
 tcp.send(vetor)  # Envia o vetor em formato de bytes
 print('Cliente: Vetor enviado')
@@ -32,6 +31,7 @@ print('Cliente: Vetor enviado')
 print('Cliente: Esperando o novo vetor...')
 vetor = tcp.recv(1024)  # Recebe o novo vetor
 print('Cliente: O vetor foi recebido')
+vetor = list(map(int, vetor))
 
 print('O vetor ordenado é: {}'.format(vetor))  # Mostra o novo vetor
 

@@ -2,8 +2,17 @@
 
 import socket
 
+
+def ordenarVetor(vetorBytes):
+    """Função que ordena o vetor."""
+    vetor = list(map(int, vetorBytes))
+
+
+    return bytes(vetor)
+
+
 ip = 'localhost'  # Definição do endereço IP
-porta = 5000  # Definição da porta de conexão
+porta = 8000  # Definição da porta de conexão
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Definição do tipo de conexão (TCP ou UDP)
 tcp.bind((ip, porta))  # Solicita uma conexão
@@ -14,9 +23,10 @@ conexao, cliente = tcp.accept()
 print('Servidor: Conexão feita com o cliente: {}'.format(cliente))
 
 vetor = conexao.recv(1024)
-print(vetor)
+vetorOrdenado = ordenarVetor(vetor)
 
-conexao.send(vetor)
+
+conexao.send(vetorOrdenado)
 
 
 conexao.close()
